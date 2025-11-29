@@ -8,8 +8,16 @@
 
 int main()
 {
-	SECURITY_DESCRIPTOR secDescriptor{};// we must use a function to manipulate, or set the data in this struct.
+	SECURITY_DESCRIPTOR secDescriptor{}; // contains info such as, owner, group, Sacl, Dacl, control. (Important)
 
+	// section to intialiaze SECURITY_DESCRIPTOR
+	SID si
+	{
+
+	};
+
+
+	// END OF
 	SECURITY_ATTRIBUTES secAttribs // this gets passed as a pointer to this struct as an argument to CreateProcessA() function.
 	{
 		sizeof(SECURITY_ATTRIBUTES),
@@ -42,16 +50,20 @@ int main()
 /*
 		what i know.
 
-	when a user logs in, the os collects a set of data on the user that uniquely identifies the said user. 
+	when a user logs in, the os collect	s a set of data on the user that uniquely identifies the said user. 
 	It then stores the set in an access token. I think I should try my luck with trying to create a fake security 
 	descriptor. 
 
 		to-do
+	
+	~ firstly, we need a SID structure to identify the user we want to impersonate (high level user), we need to use the function 
+	AllocateAndIntializeSid in order to set the structure members for it. 
 
-	1. look into windows functions that define struct members for SECURITY_DESCRIPTOR instead of just initializing it with
-	default values.
+	~ first step will satisfy the first structure member of SECURITY_DESCRIPTOR. I will need to check the other members 
+	and set them accordingly. 
 
-	Note: you need multiple windows functions to set all members of the SECURITY_DESCRIPTOR structure. Strange, but we'll make it work. 
+	Notes: 
+	~ complete each step, sequentially. 
 
-	2. reference that microsoft article that I emailed to myself.
+	~ look further into SID data structure. 
 */
