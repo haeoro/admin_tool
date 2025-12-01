@@ -8,18 +8,22 @@
 
 int main()
 {
-	SECURITY_DESCRIPTOR secDescriptor{}; // contains info such as, owner, group, Sacl, Dacl, control. (Important)
+	SECURITY_DESCRIPTOR objRights{}; // contains info such as, owner, group, Sacl, Dacl, control. (Important)
+
+
+
 
 	// SID structure stuff
-	SID_IDENTIFIER_AUTHORITY sia{
+	SID_IDENTIFIER_AUTHORITY sia
+	{
 		5
 	};
-	SID si{};
+	PSID si{};
 
-	BOOL sidInit = AllocateAndInitializeSid(
-		&sia,
+	BOOL sid = AllocateAndInitializeSid(
+		&sia, 
 		1,
-		1,
+		SECURITY_WORLD_RID,
 		0,
 		0,
 		0,
@@ -30,10 +34,24 @@ int main()
 		&si
 	);
 	// END OF
-	SECURITY_ATTRIBUTES secAttribs // this gets passed as a pointer to this struct as an argument to CreateProcessA() function.
+
+	// set revision for SECURITY_DESCRIPTOR.
+
+	BOOL revisionSet = InitializeSecurityDescriptor( // first parameter satisfied.
+		&objRights,
+		SECURITY_DESCRIPTOR_REVISION
+	);
+
+	std::cout << revisionSet; // debug statement for revisionSet
+
+
+	// end 
+
+
+	SECURITY_ATTRIBUTES procAttribs // this gets passed as a pointer to this struct as an argument to CreateProcessA() function.
 	{
 		sizeof(SECURITY_ATTRIBUTES),
-		&secDescriptor, // pointer to the SECURITY_DESCRIPTOR struct.
+		&objRights, // pointer to the SECURITY_DESCRIPTOR struct.
 		FALSE // tells us whether the security_attributes is inheritable.
 	};
 
@@ -46,7 +64,7 @@ int main()
 	BOOL mainProc = CreateProcessA(
 		NULL,
 		(LPSTR)"C:\\Windows\\System32\\cmd.exe", // path to application to be run
-		&secAttribs, // pointer to SECURITY_ATTRIBUTES struct here (defines descriptor).
+		&procAttribs, // pointer to SECURITY_ATTRIBUTES struct here (defines descriptor).
 		// we haven't done any customizations for anything else up to this point.
 		NULL,
 		FALSE,
@@ -68,14 +86,6 @@ int main()
 
 		to-do
 	
-	~ firstly, we need a SID structure to identify the user we want to impersonate (high level user), we need to use the function 
-	AllocateAndIntializeSid in order to set the structure members for it. 
+	~ initialize all members of objRights (SECURITY_DESCRIPTOR)
 
-	~ first step will satisfy the first structure member of SECURITY_DESCRIPTOR. I will need to check the other members 
-	and set them accordingly. 
-
-	Notes: 
-	~ complete each step, sequentially. 
-
-	~ look further into SID data structure. 
 */
