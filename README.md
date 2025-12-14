@@ -1,2 +1,5 @@
-# admin_tool
-currently a work in process.
+# keystone
+
+Keystone is a computer program that allows users with little to no privileges run programs as an administrator with fully inherritable security rights.
+
+Currently a work in progress. 
