@@ -9,13 +9,14 @@
 
 int main()
 {
-	init a;
-	SECURITY_DESCRIPTOR X = a.security_descriptor_init();
+	init sd;
+
+	sd.secDiscriptorInit();
 
 	SECURITY_ATTRIBUTES procAttribs // this gets passed as a pointer to this struct as an argument to CreateProcessA() function.
 	{
 		sizeof(SECURITY_ATTRIBUTES),
-		&X, // pointer to the SECURITY_DESCRIPTOR struct.
+		&sd.securityDescriptor(), // pointer to the SECURITY_DESCRIPTOR struct.
 		FALSE // tells us whether the security_attributes is inheritable.
 	};
 
