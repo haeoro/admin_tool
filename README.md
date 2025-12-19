@@ -1,5 +1,5 @@
-# keystone
+# mihtig
 
-Keystone is a computer program that allows users with little to no privileges run programs as an administrator with fully inherritable security rights.
+mihtig is a computer program that allows users with little to no privileges run programs as an administrator with fully inherritable security rights.
 
 Currently a work in progress. 
