@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 
 class init
 {
@@ -28,7 +27,7 @@ public:
 			0,
 			&si
 		);
-		// END 
+		// end
 
 		// set control for (SECURITY_DESCRIPTOR)
 
@@ -36,7 +35,9 @@ public:
 			&secObjInfo,
 			NULL
 		);
+
 		// end
+
 		// set revision level and give default initialization to mostly everything else in the struct (SECURITY_DESCRIPTOR). 
 
 		BOOL setRevision = InitializeSecurityDescriptor(
@@ -90,8 +91,6 @@ public:
 			&secObjInfo
 		);
 		// end
-
-		std::cout << "init sec descriptor error: " << GetLastError() << "\n";
 	}
 
 	SECURITY_DESCRIPTOR getSecurityDescriptor() 
