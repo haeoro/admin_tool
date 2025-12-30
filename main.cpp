@@ -11,7 +11,7 @@ int main()
 {
 	init sd;
 	sd.setSecurityDescriptor();
-	std::cout << "init sec descriptor error: " << GetLastError() << "\n";
+	std::cout << "init sec descriptor error: " << GetLastError() << "\n"; // debug statement
 	SECURITY_DESCRIPTOR x = sd.getSecurityDescriptor();
 
 	SECURITY_ATTRIBUTES procAttribs // this gets passed as a pointer to this struct as an argument to CreateProcessA() function.
@@ -44,15 +44,9 @@ int main()
 
 
 /*
-		what i know.
-
-	when a user logs in, the os collect	s a set of data on the user that uniquely identifies the said user.
-	It then stores the set in an access token. I think I should try my luck with trying to create a fake security
-	descriptor.
-
 		to-do
 
-	~ initialize all members of SECURITY_DESCRIPTOR except for the first three struct members
-	(first three already init using InitializeSecurityDescriptor function)
+		fix error code 1337 regarding mainProc.
+	
 
 */
