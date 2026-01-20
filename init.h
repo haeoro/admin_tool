@@ -8,11 +8,23 @@ public:
 	void setSecurityDescriptor() 
 	{
 		// SID structure stuff
+
 		SID_IDENTIFIER_AUTHORITY sia
 		{
 			SECURITY_NT_AUTHORITY
 		};
 		PSID si = nullptr; // this security identification object determines what level of authority we have. 
+
+		// set revision level and give default initialization to mostly everything else in the struct (SECURITY_DESCRIPTOR). 
+
+		BOOL setRevision = InitializeSecurityDescriptor(
+			&secObjInfo,
+			SECURITY_DESCRIPTOR_REVISION
+		);
+
+		// end
+
+		// allocates and initializes the SID.
 
 		BOOL sid = AllocateAndInitializeSid( // function to initialize our 
 			&sia,
@@ -27,32 +39,12 @@ public:
 			0,
 			&si
 		);
-		
-		// end
-
-		// set control for (SECURITY_DESCRIPTOR)
-
-		DWORD setControl = SetSecurityDescriptorRMControl(
-			&secObjInfo,
-			NULL
-		);
-
-		// end
-
-		// set revision level and give default initialization to mostly everything else in the struct (SECURITY_DESCRIPTOR). 
-
-		BOOL setRevision = InitializeSecurityDescriptor(
-			&secObjInfo,
-			SECURITY_DESCRIPTOR_REVISION
-		);
-
-		// end 
 
 		// set owner of SECURITY_DESCRIPTOR
 
 		BOOL secDesOwner = SetSecurityDescriptorOwner(
 			&secObjInfo,
-			&si,
+			si,
 			1
 		);
 
@@ -61,7 +53,7 @@ public:
 		// set group for SECURITY_DESCRIPTOR
 		BOOL secDesGroup = SetSecurityDescriptorGroup(
 			&secObjInfo,
-			&si,
+			si,
 			1
 		);
 		// end
@@ -79,5 +71,4 @@ public:
 	~ security descriptor is being initialized incorrectly (error code 1338)
 	~ messy code.
 	
-
 */
