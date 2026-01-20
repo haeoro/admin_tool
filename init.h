@@ -68,7 +68,7 @@ public:
 /*
 	issues
 	
-	~ security descriptor is being initialized incorrectly (error code 1338)
+	~ security descriptor is being initialized incorrectly (error code 1307)
 	~ messy code.
 	
 */
